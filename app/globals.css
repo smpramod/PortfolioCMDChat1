@@ -2,38 +2,62 @@
 
 :root {
   color-scheme: dark;
-  --void: oklch(0.16 0.01 250);
-  --surface: oklch(0.22 0.015 250);
-  --text-primary: oklch(0.93 0.022 88);
-  --text-secondary: oklch(0.66 0.03 250);
-  --accent: oklch(0.78 0.12 195);
-  --warm: oklch(0.88 0.02 85);
-  --vignette: oklch(0.12 0.01 250 / 0.62);
-  --text-hero: clamp(2.15rem, 9vw, 6rem);
-  --text-h2: clamp(1.5rem, 3.5vw, 3rem);
-  --text-body: clamp(0.95rem, 1.1vw, 1.125rem);
-  --text-mono: clamp(0.7rem, 0.9vw, 0.875rem);
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --void: #07090d;
+  --surface: #0d1117;
+  --surface-raised: #131922;
+  --surface-active: #19222e;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.18);
+  --border-active: rgba(52, 211, 153, 0.4);
+  --text-primary: #f0f6fc;
+  --text-secondary: #8b949e;
+  --text-muted: #57606a;
+  --accent: #34d399;
+  --accent-glow: rgba(52, 211, 153, 0.15);
+  --emerald: #10b981;
+  --mint: #34d399;
+  --amber: #f59e0b;
+  --amber-glow: rgba(245, 158, 11, 0.15);
+  --cyan: #06b6d4;
+  --sky: #38bdf8;
+  --purple: #8b5cf6;
+  --purple-glow: rgba(139, 92, 246, 0.15);
+  --text-hero: clamp(2.2rem, 7vw, 5.5rem);
+  --text-h2: clamp(1.6rem, 3.5vw, 3rem);
+  --text-h3: clamp(1.2rem, 2vw, 1.75rem);
+  --text-body: clamp(0.9rem, 1vw, 1.05rem);
+  --text-mono: clamp(0.7rem, 0.85vw, 0.85rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html[data-theme="light"] {
   color-scheme: light;
-  --void: oklch(0.96 0.01 250);
-  --surface: oklch(0.92 0.01 250);
-  --text-primary: oklch(0.22 0.02 260);
-  --text-secondary: oklch(0.42 0.02 250);
-  --accent: oklch(0.55 0.12 195);
-  --warm: oklch(0.45 0.05 85);
-  --vignette: oklch(0.82 0.02 80 / 0.35);
+  --void: #f6f8fa;
+  --surface: #ffffff;
+  --surface-raised: #eaeef2;
+  --surface-active: #dfe5ec;
+  --border-subtle: rgba(0, 0, 0, 0.09);
+  --border-hover: rgba(0, 0, 0, 0.2);
+  --border-active: rgba(16, 185, 129, 0.6);
+  --text-primary: #1f2328;
+  --text-secondary: #57606a;
+  --text-muted: #8c959f;
+  --accent: #059669;
+  --accent-glow: rgba(5, 150, 105, 0.12);
 }
 
 @theme inline {
   --color-void: var(--void);
   --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
   --color-accent: var(--accent);
-  --color-warm: var(--warm);
+  --color-emerald: var(--emerald);
+  --color-amber: var(--amber);
+  --color-cyan: var(--cyan);
+  --color-purple: var(--purple);
   --font-sans: var(--font-body);
   --font-serif: var(--font-display);
   --font-mono: var(--font-code);
@@ -203,10 +227,74 @@ html[data-theme="light"] .glass-panel {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 45%, var(--vignette) 100%);
+  background: radial-gradient(ellipse at center, transparent 45%, var(--vignette, rgba(0,0,0,0.5)) 100%);
 }
 
 html[data-theme="light"] .grain {
   opacity: 0.03;
   mix-blend-mode: multiply;
+}
+
+/* System-Oriented Technical Patterns */
+.tech-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.tech-grid-dense {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.sys-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sys-card:hover {
+  border-color: var(--border-hover);
+}
+
+.sys-card-active {
+  background: var(--surface-raised);
+  border-color: var(--border-active);
+  box-shadow: 0 0 20px -4px var(--accent-glow);
+}
+
+.telemetry-tag {
+  font-family: var(--font-code), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.pulse-dot {
+  animation: pulseDot 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes dataFlow {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+
+.flow-active {
+  stroke-dasharray: 6 6;
+  animation: dataFlow 1.2s linear infinite;
 }

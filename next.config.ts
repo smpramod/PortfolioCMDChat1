@@ -28,6 +28,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    return [
+      {
+        source: "/pramod_sde.pdf",
+        destination: "/Abhishek_Farande_Resume.pdf",
+      },
+    ];
+  },
 };
 
 export default nextConfig;
