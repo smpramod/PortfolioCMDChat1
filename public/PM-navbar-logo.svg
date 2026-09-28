@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 72" fill="none">
+  <defs>
+    <linearGradient id="a" x1="12" y1="10" x2="200" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#62F5E2"/>
+      <stop offset=".55" stop-color="#18CFC1"/>
+      <stop offset="1" stop-color="#079A9C"/>
+    </linearGradient>
+    <filter id="g" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="2.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Developer-style PM monogram -->
+  <!-- Monogram: P -->
+  <path d="M12 15h30c9.5 0 16 4.5 16 12s-6.5 12-16 12H23.5v18H12V15Zm11.5 7.5v9H39c4 0 7-1.5 7-4.5s-3-4.5-7-4.5H23.5Z"
+        fill="url(#a)" filter="url(#g)"/>
+
+  <!-- Monogram: M -->
+  <path d="M68 57V15h12l22 25 22-25h12v42h-11V29l-18 20.5h-10L79 29v28H68Z"
+        fill="url(#a)" filter="url(#g)"/>
+
+  <!-- subtle code cursor / circuit detail -->
+  <path d="M148 24h16M148 33h26M148 42h16"
+        stroke="#0C8F91" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+  <circle cx="184" cy="33" r="4" fill="#18CFC1"/>
+  <circle cx="184" cy="33" r="8" stroke="#37E5D0" stroke-opacity=".35" stroke-width="1.5"/>
+  <path d="M184 25v-8M184 49v-8M188 33h12" stroke="#18CFC1" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+  <circle cx="204" cy="33" r="2.5" fill="#62F5E2"/>
+</svg>

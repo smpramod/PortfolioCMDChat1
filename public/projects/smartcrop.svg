@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <linearGradient id="aiBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071714"/>
+      <stop offset="0.5" stop-color="#0d241d"/>
+      <stop offset="1" stop-color="#143b2f"/>
+    </linearGradient>
+    <linearGradient id="aiCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f2922"/>
+      <stop offset="1" stop-color="#0a1d18"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2dd4bf"/>
+      <stop offset="1" stop-color="#10b981"/>
+    </linearGradient>
+    <filter id="aiGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#aiBg)"/>
+
+  <!-- Neural Mesh Background -->
+  <path d="M100 200h1400M100 400h1400M100 600h1400M100 800h1400M300 100v800M600 100v800M900 100v800M1200 100v800"
+        stroke="#1a4235" stroke-width="1.5" opacity="0.4" stroke-dasharray="6 6"/>
+
+  <!-- Title -->
+  <text x="800" y="110" text-anchor="middle" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="24" letter-spacing="8" font-weight="600">SMARTCROP — AI CROP DISEASE PREDICTION</text>
+  <text x="800" y="145" text-anchor="middle" fill="#8cb3a4" font-family="'Instrument Sans', sans-serif" font-size="16" letter-spacing="3">TENSORFLOW &amp; PYTORCH · CNN CLASSIFIER · 88% ACCURACY ACROSS 8,000 IMAGES</text>
+
+  <!-- Left: CNN Leaf Diagnostic Scanner Frame -->
+  <rect x="180" y="200" width="560" height="690" rx="24" fill="url(#aiCard)" stroke="#2dd4bf" stroke-width="2" stroke-opacity="0.4" filter="url(#aiGlow)"/>
+
+  <!-- Card Top Bar -->
+  <rect x="180" y="200" width="560" height="55" rx="24" fill="#0b1e19"/>
+  <circle cx="215" cy="228" r="6" fill="#e05d5d"/>
+  <circle cx="235" cy="228" r="6" fill="#e0a85d"/>
+  <circle cx="255" cy="228" r="6" fill="#5de09a"/>
+  <text x="285" y="233" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="13">inference_stream.py · PlantVillage 8K Dataset</text>
+
+  <!-- Image Scanner Simulation Viewport -->
+  <rect x="215" y="280" width="490" height="340" rx="18" fill="#081512" stroke="#1d4d3e" stroke-width="2"/>
+
+  <!-- Stylized Botanical Leaf Drawing -->
+  <g transform="translate(460, 450) scale(1.4)">
+    <!-- Leaf Body -->
+    <path d="M0 -90 C50 -50 70 20 0 90 C-70 20 -50 -50 0 -90 Z" fill="url(#leafGrad)" opacity="0.85"/>
+    <!-- Stem and Veins -->
+    <path d="M0 -85 L0 85 M0 -40 C15 -30 25 -10 35 -5 M0 -10 C20 0 35 20 40 30 M0 20 C15 30 25 45 30 55 M0 -40 C-15 -30 -25 -10 -35 -5 M0 -10 C-20 0 -35 20 -40 30 M0 20 C-15 30 -25 45 -30 55"
+          stroke="#072018" stroke-width="2.5" fill="none"/>
+    <!-- Simulated Crop Disease Spot Target Area -->
+    <circle cx="18" cy="-12" r="14" fill="#d97706" fill-opacity="0.4" stroke="#fbbf24" stroke-width="2"/>
+    <circle cx="-12" cy="24" r="10" fill="#d97706" fill-opacity="0.4" stroke="#fbbf24" stroke-width="2"/>
+  </g>
+
+  <!-- AI Bounding Box Overlay -->
+  <rect x="425" y="380" width="130" height="110" fill="none" stroke="#2dd4bf" stroke-width="2.5" stroke-dasharray="8 4"/>
+  <rect x="425" y="355" width="150" height="24" rx="4" fill="#2dd4bf"/>
+  <text x="432" y="371" fill="#071813" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold">EARLY BLIGHT 94.2%</text>
+
+  <!-- Scanning Laser Line -->
+  <line x1="220" y1="440" x2="700" y2="440" stroke="#34d399" stroke-width="2" opacity="0.8" stroke-dasharray="12 6"/>
+
+  <!-- Model Output / Diagnostic Badges Below Scanner -->
+  <rect x="215" y="645" width="235" height="105" rx="14" fill="#0c221a" stroke="#1c4738" stroke-width="1.5"/>
+  <text x="235" y="678" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="12">PREDICTED CLASS</text>
+  <text x="235" y="715" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="20" font-weight="bold">Tomato Early Blight</text>
+  <text x="235" y="736" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="11">Pathogen: Alternaria solani</text>
+
+  <rect x="470" y="645" width="235" height="105" rx="14" fill="#0c221a" stroke="#1c4738" stroke-width="1.5"/>
+  <text x="490" y="678" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="12">AUTOMATED ACTION</text>
+  <text x="490" y="715" fill="#2dd4bf" font-family="'Instrument Sans', sans-serif" font-size="18" font-weight="bold">PDFKit Report</text>
+  <text x="490" y="736" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="11">✓ Generated in 320ms</text>
+
+  <rect x="215" y="768" width="490" height="90" rx="14" fill="#0e281f" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="240" y="805" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="16" font-weight="600">Prescribed Treatment / Remedy</text>
+  <text x="240" y="830" fill="#a3cfbf" font-family="'Instrument Sans', sans-serif" font-size="13">Apply Copper Fungicide or Chlorothalonil every 7-10 days. Remove lower infected foliage.</text>
+
+  <!-- Right: Metrics & CNN Architecture Pipeline Panel -->
+  <rect x="780" y="200" width="640" height="690" rx="24" fill="url(#aiCard)" stroke="#2dd4bf" stroke-width="2" stroke-opacity="0.4"/>
+
+  <!-- Right Header -->
+  <rect x="780" y="200" width="640" height="55" rx="24" fill="#0b1e19"/>
+  <text x="815" y="235" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="18" font-weight="600">Deep Learning Model Performance</text>
+  <rect x="1275" y="212" width="125" height="30" rx="15" fill="#2dd4bf" fill-opacity="0.15" stroke="#2dd4bf" stroke-width="1"/>
+  <text x="1337" y="232" text-anchor="middle" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="bold">8,000 IMAGES</text>
+
+  <!-- Big Stat Gauges -->
+  <rect x="815" y="280" width="180" height="110" rx="16" fill="#0c221a" stroke="#1d4838" stroke-width="1.5"/>
+  <text x="835" y="315" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="13">ACCURACY</text>
+  <text x="835" y="365" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="38" font-weight="bold">88.4%</text>
+
+  <rect x="1010" y="280" width="180" height="110" rx="16" fill="#0c221a" stroke="#1d4838" stroke-width="1.5"/>
+  <text x="1030" y="315" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="13">TEST LOSS</text>
+  <text x="1030" y="365" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="38" font-weight="bold">0.24</text>
+
+  <rect x="1205" y="280" width="180" height="110" rx="16" fill="#0c221a" stroke="#1d4838" stroke-width="1.5"/>
+  <text x="1225" y="315" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="13">DISEASE CLASSES</text>
+  <text x="1225" y="365" fill="#ffffff" font-family="'JetBrains Mono', monospace" font-size="38" font-weight="bold">15+</text>
+
+  <!-- CNN Architecture Diagram / Pipeline Box -->
+  <rect x="815" y="420" width="570" height="435" rx="18" fill="#081512" stroke="#183f32" stroke-width="1.5"/>
+  <text x="845" y="458" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="17" font-weight="600">Model Architecture &amp; Data Pipeline</text>
+
+  <!-- Layer 1: Input & Augmentation -->
+  <rect x="845" y="480" width="510" height="68" rx="12" fill="#0f261e" stroke="#1e4d3d" stroke-width="1"/>
+  <circle cx="875" cy="514" r="16" fill="#2dd4bf" fill-opacity="0.2"/>
+  <text x="875" y="520" text-anchor="middle" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold">01</text>
+  <text x="910" y="505" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="15" font-weight="600">Data Preprocessing &amp; Augmentation</text>
+  <text x="910" y="528" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="12">NumPy · Pandas · Random Rotations · Normalization (224×224)</text>
+
+  <!-- Layer 2: Convolutional Feature Extraction -->
+  <rect x="845" y="565" width="510" height="68" rx="12" fill="#0f261e" stroke="#1e4d3d" stroke-width="1"/>
+  <circle cx="875" cy="599" r="16" fill="#2dd4bf" fill-opacity="0.2"/>
+  <text x="875" y="605" text-anchor="middle" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold">02</text>
+  <text x="910" y="590" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="15" font-weight="600">CNN Feature Extraction Layers</text>
+  <text x="910" y="613" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="12">Conv2D (32/64/128 filters) + MaxPooling + BatchNorm + Dropout(0.3)</text>
+
+  <!-- Layer 3: Dense Classification -->
+  <rect x="845" y="650" width="510" height="68" rx="12" fill="#0f261e" stroke="#1e4d3d" stroke-width="1"/>
+  <circle cx="875" cy="684" r="16" fill="#2dd4bf" fill-opacity="0.2"/>
+  <text x="875" y="690" text-anchor="middle" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold">03</text>
+  <text x="910" y="675" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="15" font-weight="600">Dense Classifier &amp; Softmax</text>
+  <text x="910" y="698" fill="#75a595" font-family="'JetBrains Mono', monospace" font-size="12">Dense(256, ReLU) → Softmax probabilities across 15 plant pathology classes</text>
+
+  <!-- Layer 4: Full Stack Dashboard & PDFKit -->
+  <rect x="845" y="735" width="510" height="85" rx="12" fill="#133328" stroke="#2dd4bf" stroke-width="1.5"/>
+  <circle cx="875" cy="777" r="16" fill="#2dd4bf"/>
+  <text x="875" y="783" text-anchor="middle" fill="#071813" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="bold">04</text>
+  <text x="910" y="763" fill="#ffffff" font-family="'Instrument Sans', sans-serif" font-size="15" font-weight="600">Full-Stack React + Node.js Diagnostic Engine</text>
+  <text x="910" y="786" fill="#2dd4bf" font-family="'JetBrains Mono', monospace" font-size="12">Automated PDF diagnostic reports generated instantly with PDFKit</text>
+  <text x="910" y="805" fill="#a3cfbf" font-family="'Instrument Sans', sans-serif" font-size="12">Disciplined Git version control with performance tracking and validations</text>
+</svg>
