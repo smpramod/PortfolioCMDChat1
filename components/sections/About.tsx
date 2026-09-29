@@ -5,12 +5,12 @@ import { motion } from "framer-motion";
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const facts = [
-  { label: "Education", value: "B.Tech CS & Business Systems — KIT Kolhapur · CGPA 8.3" },
+  { label: "Education", value: "B.Tech CS & Business Systems — KIT Kolhapur · CGPA 8.4 (2023 – 2026)" },
   { label: "Diploma", value: "Computer Engineering — GP Miraj · 88.63%" },
   { label: "School", value: "SSC — New Highschool Sangli · 90.00%" },
   { label: "Achievements", value: "HackerRank 4★ Java & 4★ SQL · 180+ DSA Solved" },
   { label: "Leadership", value: "Vice President & Event Head (COMPESA Tech Fest)" },
-  { label: "Now", value: "Backend Developer — Seratek Systems" },
+  { label: "Now", value: "Backend Developer Intern — Seratek Systems (2026)" },
   { label: "Open to", value: "GET / DET / Junior Developer opportunities" },
 ];
 
@@ -44,7 +44,7 @@ export function About() {
             transition={{ duration: 0.8, delay: 0.16, ease }}
             className="mt-6 text-pretty text-text-secondary"
           >
-            Backend Developer with hands-on experience shipping production features in a live ERP product at Seratek Systems using NestJS, Redis, MongoDB, and TypeScript. Completed B.Tech in CS & Business Systems (CGPA 8.3, KIT Kolhapur, June 2026). Backend-first with working knowledge of React, Android, and ML integration.
+            Backend Developer Intern with hands-on experience shipping production features in a live ERP product at Seratek Systems (2026) using NestJS, Redis, MongoDB, and TypeScript. Completed B.Tech in CS & Business Systems (2023 – 2026, KIT Kolhapur, CGPA 8.4). Backend-first with working knowledge of Spring Boot, Android, and ML integration.
           </motion.p>
           <motion.blockquote
             initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}

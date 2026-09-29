@@ -27,34 +27,50 @@ export function CommandPalette() {
 
   const commands = [
     {
-      label: "Jump to Architecture & System Map",
+      label: "01 // Home & System Telemetry",
       group: "Navigation",
       action: () => {
-        window.location.hash = "#system-map";
+        window.location.hash = "#system-overview";
         setCommandPaletteOpen(false);
       },
     },
     {
-      label: "Jump to Request-to-Production Pipeline",
+      label: "02 // Engineering (Subsystems & Request Lifecycle)",
       group: "Navigation",
       action: () => {
-        window.location.hash = "#request-pipeline";
+        window.location.hash = "#engineering";
         setCommandPaletteOpen(false);
       },
     },
     {
-      label: "Jump to Production Case Studies (College ERP)",
-      group: "Projects",
+      label: "03 // Projects (Case Studies & Post-Mortems)",
+      group: "Navigation",
       action: () => {
-        window.location.hash = "#case-studies";
+        window.location.hash = "#projects";
         setCommandPaletteOpen(false);
       },
     },
     {
-      label: "Jump to Production Incidents & Post-Mortems",
-      group: "Incidents",
+      label: "04 // Research (Universal RAG & UEBA Anomaly ML)",
+      group: "Navigation",
       action: () => {
-        window.location.hash = "#engineering-incidents";
+        window.location.hash = "#research";
+        setCommandPaletteOpen(false);
+      },
+    },
+    {
+      label: "05 // Experience (Milestones & Credentials)",
+      group: "Navigation",
+      action: () => {
+        window.location.hash = "#experience";
+        setCommandPaletteOpen(false);
+      },
+    },
+    {
+      label: "06 // Contact & Recruiter Fact Sheet",
+      group: "Navigation",
+      action: () => {
+        window.location.hash = "#contact";
         setCommandPaletteOpen(false);
       },
     },

@@ -49,7 +49,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.24, ease }}
           className="mt-6 max-w-md text-pretty text-text-secondary"
         >
-          Backend Developer shipping production features in a live ERP product at Seratek Systems using NestJS, Redis, MongoDB, and TypeScript.
+          Backend Developer Intern shipping production features in a live ERP product at Seratek Systems (2026) using NestJS, Redis, MongoDB, and TypeScript.
         </motion.p>
         <div className="mt-8 flex flex-wrap gap-6 sm:mt-10 sm:gap-8">
           {stats.map((stat, index) => (

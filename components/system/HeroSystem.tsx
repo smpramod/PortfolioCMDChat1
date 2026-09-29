@@ -1,22 +1,60 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useSystem } from "@/lib/system-context";
 import { PROFILE } from "@/lib/system-data";
 
 export function HeroSystem() {
   const { audienceMode, setAudienceMode, setCommandPaletteOpen } = useSystem();
+  const [wakeStage, setWakeStage] = useState<number>(0);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
+
+  // Cinematic wake-up sequence on initial arrival
+  useEffect(() => {
+    const t1 = setTimeout(() => setWakeStage(1), 100);
+    const t2 = setTimeout(() => setWakeStage(2), 350);
+    const t3 = setTimeout(() => setWakeStage(3), 600);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, []);
+
+  // Subtle continuous scroll acknowledgement
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, scrollY / (windowHeight * 0.8)));
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <section
       id="system-overview"
-      className="relative min-h-[92svh] flex flex-col justify-center pt-20 pb-12 sm:pt-24 sm:pb-16 border-b border-white/10 tech-grid"
+      className="relative min-h-[92svh] flex flex-col justify-center pt-20 pb-12 sm:pt-24 sm:pb-16 border-b border-white/10 tech-grid transition-opacity duration-700"
+      style={{
+        opacity: wakeStage >= 1 ? 1 : 0.85,
+        transform: `translateY(${scrollProgress * 10}px)`,
+      }}
     >
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* System Initialization Header */}
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 font-mono text-xs text-text-secondary">
+        {/* System Initialization Header with wake-up state */}
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 font-mono text-xs text-text-secondary transition-all duration-500">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-emerald-400 font-semibold tracking-wider">SYSTEM INITIALIZED // ONLINE</span>
+            <span
+              className={`h-2 w-2 rounded-full transition-colors duration-500 ${
+                wakeStage >= 2 ? "bg-emerald-500 animate-pulse" : "bg-emerald-500/40"
+              }`}
+            />
+            <span className="text-emerald-400 font-semibold tracking-wider">
+              {wakeStage >= 3 ? "SYSTEM INITIALIZED // ONLINE" : "INITIALIZING TELEMETRY KERNEL..."}
+            </span>
           </div>
           <div className="flex items-center gap-4 text-[11px]">
             <span>NODE: PUNE_IN [UTC+5:30]</span>
@@ -42,7 +80,7 @@ export function HeroSystem() {
             </h1>
 
             <p className="mt-5 max-w-xl font-mono text-xs sm:text-sm text-text-secondary leading-relaxed">
-              Backend Developer shipping live ERP modules at <strong className="text-text-primary font-semibold">Seratek Systems</strong> with NestJS, Redis, MongoDB &amp; BullMQ. Researcher developing the <strong className="text-text-primary font-semibold">Universal RAG Engine</strong> and <strong className="text-text-primary font-semibold">Adaptive AI UEBA</strong> anomaly systems.
+              Backend Developer Intern shipping live ERP modules at <strong className="text-text-primary font-semibold">Seratek Systems (2026)</strong> with NestJS, Redis, MongoDB &amp; BullMQ. Building sponsored platforms like <strong className="text-text-primary font-semibold">LBO Community Marketplace</strong> and researching AI retrieval architectures.
             </p>
 
             {/* Audience Lens Filter */}
@@ -125,12 +163,13 @@ export function HeroSystem() {
                 <span>→</span>
               </a>
 
-              <a
-                href="#request-pipeline"
-                className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 font-mono text-xs text-text-primary hover:border-white/30 transition-colors"
+              <button
+                type="button"
+                onClick={() => setCommandPaletteOpen(true)}
+                className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3.5 py-2.5 font-mono text-xs text-text-secondary hover:text-text-primary transition-colors"
               >
-                <span>REQUEST PIPELINE FLOW</span>
-              </a>
+                <span>[ ⌘K COMMANDS ]</span>
+              </button>
 
               <a
                 href="#engineering-incidents"
@@ -139,13 +178,12 @@ export function HeroSystem() {
                 <span>POST-MORTEMS</span>
               </a>
 
-              <button
-                type="button"
-                onClick={() => setCommandPaletteOpen(true)}
-                className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3.5 py-2.5 font-mono text-xs text-text-secondary hover:text-text-primary transition-colors"
+              <a
+                href="#request-pipeline"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2.5 font-mono text-xs text-text-primary hover:border-white/30 transition-colors"
               >
-                <span>[ ⌘K COMMANDS ]</span>
-              </button>
+                <span>REQUEST PIPELINE FLOW</span>
+              </a>
             </div>
           </div>
 
@@ -160,15 +198,15 @@ export function HeroSystem() {
 
             <div className="mt-4 grid grid-cols-2 gap-3 font-mono">
               <div className="rounded-lg border border-white/5 bg-white/[0.02] p-3">
-                <span className="text-[10px] text-text-secondary">PROD EXPERIENCE</span>
+                <span className="text-[10px] text-text-secondary">PROD INTERNSHIP</span>
                 <p className="mt-1 text-sm font-semibold text-text-primary">SERATEK SYSTEMS</p>
-                <p className="text-[10px] text-emerald-400">College ERP / Webdesk</p>
+                <p className="text-[10px] text-emerald-400">College ERP (2026)</p>
               </div>
 
               <div className="rounded-lg border border-white/5 bg-white/[0.02] p-3">
                 <span className="text-[10px] text-text-secondary">ACADEMIC CGPA</span>
                 <p className="mt-1 text-sm font-semibold text-text-primary">8.4 / 10.0</p>
-                <p className="text-[10px] text-emerald-400">KIT Kolhapur · CSBS</p>
+                <p className="text-[10px] text-emerald-400">KIT Kolhapur (2023–2026)</p>
               </div>
 
               <div className="rounded-lg border border-white/5 bg-white/[0.02] p-3">

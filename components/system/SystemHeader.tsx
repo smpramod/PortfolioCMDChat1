@@ -1,23 +1,46 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSystem } from "@/lib/system-context";
 import { PROFILE, type AudienceMode } from "@/lib/system-data";
 
 export function SystemHeader() {
-  const { audienceMode, setAudienceMode, setCommandPaletteOpen } = useSystem();
+  const { audienceMode, setAudienceMode, setCommandPaletteOpen, activeSection, setActiveSection } = useSystem();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: "01//SYS", href: "#system-overview" },
-    { label: "02//MAP", href: "#system-map" },
-    { label: "03//PIPELINE", href: "#request-pipeline" },
-    { label: "04//PROJECTS", href: "#case-studies" },
-    { label: "05//INCIDENTS", href: "#engineering-incidents" },
-    { label: "06//AI_LAB", href: "#ai-research" },
-    { label: "07//CAREER", href: "#career-milestones" },
-    { label: "08//CONTACT", href: "#system-endpoint" },
+    { id: "system-overview", label: "01//HOME", href: "#system-overview" },
+    { id: "engineering", label: "02//ENGINEERING", href: "#engineering" },
+    { id: "projects", label: "03//PROJECTS", href: "#projects" },
+    { id: "research", label: "04//RESEARCH", href: "#research" },
+    { id: "experience", label: "05//EXPERIENCE", href: "#experience" },
+    { id: "contact", label: "06//CONTACT", href: "#contact" },
   ];
+
+  // Scroll spy to highlight active section according to visitor scroll position
+  useEffect(() => {
+    const sectionIds = navItems.map((n) => n.id);
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, {
+      root: null,
+      rootMargin: "-20% 0px -60% 0px",
+      threshold: 0.1,
+    });
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [setActiveSection]);
 
   const modes: { id: AudienceMode; label: string; icon: string }[] = [
     { id: "developer", label: "DEV", icon: "⚡" },
@@ -46,17 +69,24 @@ export function SystemHeader() {
           </span>
         </a>
 
-        {/* Center: Monospace Nav Links (Desktop) */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="rounded px-2 py-1 font-mono text-[11px] text-text-secondary transition-colors hover:bg-white/5 hover:text-emerald-400"
-            >
-              {item.label}
-            </a>
-          ))}
+        {/* Center: Monospace Nav Links with Scroll-Aware Active State */}
+        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+          {navItems.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className={`rounded px-2.5 py-1 font-mono text-[11px] transition-all ${
+                  isActive
+                    ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-[0_0_12px_rgba(52,211,153,0.2)] font-semibold"
+                    : "text-text-secondary hover:bg-white/5 hover:text-emerald-400 border border-transparent"
+                }`}
+              >
+                {item.label}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Right: Audience Lens & ⌘K & Resume */}

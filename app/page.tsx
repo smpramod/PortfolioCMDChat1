@@ -1,15 +1,11 @@
 import { SystemProvider } from "@/lib/system-context";
 import { SystemHeader } from "@/components/system/SystemHeader";
 import { HeroSystem } from "@/components/system/HeroSystem";
-import { InteractiveSystemMap } from "@/components/system/InteractiveSystemMap";
-import { RequestPipeline } from "@/components/system/RequestPipeline";
-import { ProjectCaseStudies } from "@/components/system/ProjectCaseStudies";
-import { EngineeringIncidents } from "@/components/system/EngineeringIncidents";
-import { UniversalRagDeepDive } from "@/components/system/UniversalRagDeepDive";
-import { UebaResearchLab } from "@/components/system/UebaResearchLab";
+import { EngineeringSection } from "@/components/system/EngineeringSection";
+import { ProjectsSection } from "@/components/system/ProjectsSection";
+import { ResearchSection } from "@/components/system/ResearchSection";
 import { EngineeringMilestones } from "@/components/system/EngineeringMilestones";
-import { AskMyWork } from "@/components/system/AskMyWork";
-import { SystemEndpoint } from "@/components/system/SystemEndpoint";
+import { ContactSection } from "@/components/system/ContactSection";
 import { CommandPalette } from "@/components/system/CommandPalette";
 
 export default function HomePage() {
@@ -22,35 +18,23 @@ export default function HomePage() {
       <CommandPalette />
 
       <main className="min-h-screen bg-[#07090d] text-text-primary selection:bg-emerald-500/30 selection:text-emerald-200">
-        {/* 01 // System Overview & Initialization */}
+        {/* 01 // HOME: System Overview & Telemetry Initialization */}
         <HeroSystem />
 
-        {/* 02 // Interactive System Map & Evidence-First Subsystems */}
-        <InteractiveSystemMap />
+        {/* 02 // ENGINEERING: Subsystem Architecture & Request Lifecycle */}
+        <EngineeringSection />
 
-        {/* 03 // From Request to Production Interactive Flow */}
-        <RequestPipeline />
+        {/* 03 // PROJECTS: Production Case Studies & Incident Post-Mortems */}
+        <ProjectsSection />
 
-        {/* 04 // In-Depth Production Case Studies */}
-        <ProjectCaseStudies />
+        {/* 04 // RESEARCH: Universal RAG Engine & Adaptive UEBA Anomaly ML */}
+        <ResearchSection />
 
-        {/* 05 // When Systems Break: Post-Mortems & Debugging */}
-        <EngineeringIncidents />
-
-        {/* 06 // Flagship AI: Universal RAG Engine Architecture */}
-        <UniversalRagDeepDive />
-
-        {/* 06.5 // AI Research Lab: Adaptive UEBA Anomaly ML */}
-        <UebaResearchLab />
-
-        {/* 07 // Career Milestones & Verified Credentials */}
+        {/* 05 // EXPERIENCE: Career Milestones, Commit Log & Credentials */}
         <EngineeringMilestones />
 
-        {/* Knowledge Base: Ask My Work Q&A */}
-        <AskMyWork />
-
-        {/* 08 // System Completion, Contact Form & Resume */}
-        <SystemEndpoint />
+        {/* 06 // CONTACT: System Endpoint, Direct Message & Recruiter FAQ */}
+        <ContactSection />
       </main>
     </SystemProvider>
   );

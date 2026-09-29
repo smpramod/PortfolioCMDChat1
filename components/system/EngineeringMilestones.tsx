@@ -1,49 +1,73 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MILESTONES } from "@/lib/system-data";
 
 export function EngineeringMilestones() {
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
+  const [isRevealed, setIsRevealed] = useState<boolean>(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsRevealed(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const activeMilestone = MILESTONES[selectedIdx];
 
   const gitCommitLog = [
-    { year: "2026", hash: "9a2f1c", message: "feat(backend): ship cascading soft-delete & BullMQ workers", tag: "PROD" },
-    { year: "2026", hash: "8b7e4d", message: "research(rag): hybrid dense/sparse retrieval with reranker", tag: "AI" },
-    { year: "2026", hash: "6c3a9f", message: "research(ueba): chronological anomaly detection pipeline", tag: "ML" },
-    { year: "2025", hash: "4d91e2", message: "feat(erp): academic masters & admission validation APIs", tag: "PROD" },
-    { year: "2022", hash: "2e84a0", message: "feat(iot): embedded firmware & live sensor telemetry", tag: "IOT" },
-    { year: "2022", hash: "1f73b9", message: "init(csbs): begin B.Tech Computer Science & Business Systems", tag: "EDU" },
+    { year: "2026", hash: "9a2f1c", message: "feat(seratek): live ERP backend modules, soft-delete & BullMQ", tag: "PROD", milestoneIdx: 0 },
+    { year: "2026", hash: "8b7e4d", message: "research(rag): hybrid dense/sparse retrieval with reranker", tag: "AI", milestoneIdx: 0 },
+    { year: "2025", hash: "4d91e2", message: "feat(lbo): community marketplace with Spring Boot & Firebase", tag: "PROD", milestoneIdx: 1 },
+    { year: "2023", hash: "1f73b9", message: "init(csbs): B.Tech Computer Science & Business Systems (2023-2026)", tag: "EDU", milestoneIdx: 6 },
+    { year: "2022", hash: "3c82d1", message: "feat(clinic): Gurudatta Clinic Android app & local SQLite storage", tag: "PROD", milestoneIdx: 2 },
+    { year: "2022", hash: "2e84a0", message: "feat(iot): embedded firmware & live sensor telemetry", tag: "IOT", milestoneIdx: 3 },
   ];
 
   return (
-    <section id="career-milestones" className="py-20 border-b border-white/10 bg-[#07090d]">
+    <section ref={sectionRef} id="experience" className="py-20 border-b border-white/10 bg-[#07090d] relative">
+      {/* Anchor target for backward compatibility */}
+      <div id="career-milestones" className="relative -top-24 invisible" />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="border-b border-white/10 pb-6">
           <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 uppercase tracking-widest mb-2">
-            <span>07 // CAREER TIMELINE</span>
+            <span>05 // EXPERIENCE</span>
             <span>·</span>
             <span>ENGINEERING MILESTONES &amp; CREDENTIALS</span>
           </div>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-text-primary">
-            Engineering Milestones
+            Experience &amp; Milestones
           </h2>
           <p className="mt-2 font-mono text-xs sm:text-sm text-text-secondary max-w-2xl">
             A chronological record of production software delivery, professional engineering responsibilities, academic rigor, and verified cloud certifications.
           </p>
         </div>
 
-        {/* Git-Inspired Commit Bar */}
+        {/* Git-Inspired Interactive Commit Bar */}
         <div className="mt-8 rounded-xl border border-white/10 bg-[#0d1117] p-4 font-mono text-xs overflow-x-auto">
           <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3 text-text-secondary text-[11px]">
-            <span className="text-emerald-400">git log --graph --oneline // CAREER REPOSITORY</span>
-            <span>BRANCH: MAIN (PRODUCTION)</span>
+            <span className="text-emerald-400 font-semibold">git log --graph --oneline // CAREER REPOSITORY</span>
+            <span>CLICK COMMIT TO INSPECT RECORD</span>
           </div>
           <div className="space-y-1.5 min-w-[640px]">
             {gitCommitLog.map((c) => (
-              <div key={c.hash} className="flex items-center gap-3 text-text-secondary hover:text-text-primary transition-colors">
+              <button
+                key={c.hash}
+                type="button"
+                onClick={() => setSelectedIdx(c.milestoneIdx)}
+                className="w-full flex items-center gap-3 text-left text-text-secondary hover:text-emerald-300 hover:bg-white/[0.03] p-1 rounded transition-colors"
+              >
                 <span className="text-emerald-500 font-bold">*</span>
                 <span className="text-amber-400/90">{c.hash}</span>
                 <span className="text-white/40">[{c.year}]</span>
@@ -51,7 +75,7 @@ export function EngineeringMilestones() {
                   {c.tag}
                 </span>
                 <span className="text-text-primary/90 font-mono text-[11px]">{c.message}</span>
-              </div>
+              </button>
             ))}
           </div>
         </div>
