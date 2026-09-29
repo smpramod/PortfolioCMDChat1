@@ -7,15 +7,19 @@ import { PROFILE, type AudienceMode } from "@/lib/system-data";
 export function SystemHeader() {
   const { audienceMode, setAudienceMode, setCommandPaletteOpen, activeSection, setActiveSection } = useSystem();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [sectionProgress, setSectionProgress] = useState<number>(0);
+  const [totalProgress, setTotalProgress] = useState<number>(0);
 
   const navItems = [
-    { id: "system-overview", label: "01//HOME", href: "#system-overview" },
-    { id: "engineering", label: "02//ENGINEERING", href: "#engineering" },
-    { id: "projects", label: "03//PROJECTS", href: "#projects" },
-    { id: "research", label: "04//RESEARCH", href: "#research" },
-    { id: "experience", label: "05//EXPERIENCE", href: "#experience" },
-    { id: "contact", label: "06//CONTACT", href: "#contact" },
+    { id: "system-overview", label: "01//HOME", href: "#system-overview", chapter: "01", name: "HOME" },
+    { id: "engineering", label: "02//ENGINEERING", href: "#engineering", chapter: "02", name: "ENGINEERING" },
+    { id: "projects", label: "03//PROJECTS", href: "#projects", chapter: "03", name: "PROJECTS" },
+    { id: "research", label: "04//RESEARCH", href: "#research", chapter: "04", name: "RESEARCH" },
+    { id: "experience", label: "05//EXPERIENCE", href: "#experience", chapter: "05", name: "EXPERIENCE" },
+    { id: "contact", label: "06//CONTACT", href: "#contact", chapter: "06", name: "CONTACT" },
   ];
+
+  const currentNav = navItems.find((n) => n.id === activeSection) || navItems[0];
 
   // Scroll spy to highlight active section according to visitor scroll position
   useEffect(() => {
@@ -30,7 +34,7 @@ export function SystemHeader() {
 
     const observer = new IntersectionObserver(observerCallback, {
       root: null,
-      rootMargin: "-20% 0px -60% 0px",
+      rootMargin: "-15% 0px -55% 0px",
       threshold: 0.1,
     });
 
@@ -41,6 +45,48 @@ export function SystemHeader() {
 
     return () => observer.disconnect();
   }, [setActiveSection]);
+
+  // Real-time smooth section progress calculation
+  useEffect(() => {
+    let animId: number;
+
+    const handleScroll = () => {
+      animId = requestAnimationFrame(() => {
+        const activeEl = document.getElementById(activeSection);
+        if (activeEl) {
+          const rect = activeEl.getBoundingClientRect();
+          const totalHeight = rect.height;
+          const scrolledPast = -rect.top;
+          const sectionPct = Math.min(100, Math.max(0, (scrolledPast / (totalHeight - window.innerHeight * 0.35)) * 100));
+          setSectionProgress(sectionPct);
+        }
+
+        const winScroll = window.scrollY || document.documentElement.scrollTop;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pagePct = totalHeight > 0 ? Math.min(100, Math.max(0, (winScroll / totalHeight) * 100)) : 0;
+        setTotalProgress(pagePct);
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(animId);
+    };
+  }, [activeSection]);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string, href: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      window.history.pushState(null, "", href);
+      setActiveSection(id);
+      setMobileMenuOpen(false);
+    }
+  };
 
   const modes: { id: AudienceMode; label: string; icon: string }[] = [
     { id: "developer", label: "DEV", icon: "⚡" },
@@ -54,6 +100,7 @@ export function SystemHeader() {
         {/* Left: System Status & Brand */}
         <a
           href="#system-overview"
+          onClick={(e) => handleNavClick(e, "system-overview", "#system-overview")}
           className="group flex items-center gap-2.5 font-mono text-xs uppercase tracking-wider text-text-primary"
         >
           <span className="relative flex h-2 w-2">
@@ -67,9 +114,15 @@ export function SystemHeader() {
           <span className="hidden font-normal text-text-secondary md:inline text-[11px]">
             SYS.BACKEND_V4
           </span>
+          {/* Real-time Chapter Telemetry Badge */}
+          <span className="hidden xl:inline-flex items-center gap-1 rounded bg-emerald-500/10 border border-emerald-500/25 px-1.5 py-0.5 text-[9px] text-emerald-400 font-mono">
+            <span>CH.{currentNav.chapter}</span>
+            <span className="text-white/30">·</span>
+            <span>{Math.round(sectionProgress)}%</span>
+          </span>
         </a>
 
-        {/* Center: Monospace Nav Links with Scroll-Aware Active State */}
+        {/* Center: Monospace Nav Links with Scroll-Aware Active State & Progress Line */}
         <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
@@ -77,13 +130,21 @@ export function SystemHeader() {
               <a
                 key={item.href}
                 href={item.href}
-                className={`rounded px-2.5 py-1 font-mono text-[11px] transition-all ${
+                onClick={(e) => handleNavClick(e, item.id, item.href)}
+                className={`relative overflow-hidden rounded px-2.5 py-1 font-mono text-[11px] transition-all ${
                   isActive
                     ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-[0_0_12px_rgba(52,211,153,0.2)] font-semibold"
                     : "text-text-secondary hover:bg-white/5 hover:text-emerald-400 border border-transparent"
                 }`}
               >
-                {item.label}
+                <span>{item.label}</span>
+                {/* Thin Sub-Item Section Progress Indicator */}
+                {isActive && (
+                  <span
+                    className="absolute bottom-0 left-0 h-[2px] bg-emerald-400 transition-all duration-150 rounded-full"
+                    style={{ width: `${Math.max(8, sectionProgress)}%` }}
+                  />
+                )}
               </a>
             );
           })}
@@ -174,6 +235,14 @@ export function SystemHeader() {
           </button>
         </div>
       )}
+
+      {/* 1px Hairline Portfolio Progression Bar */}
+      <div className="h-[1px] w-full bg-white/5 relative overflow-hidden">
+        <div
+          className="h-full bg-emerald-500/80 transition-all duration-150 shadow-[0_0_8px_rgba(52,211,153,0.6)]"
+          style={{ width: `${totalProgress}%` }}
+        />
+      </div>
     </header>
   );
 }

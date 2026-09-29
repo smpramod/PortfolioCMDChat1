@@ -71,7 +71,10 @@ export function HeroSystem() {
               <span>ENGINEERING PROFILE · PRAMOD MARGUDRE</span>
             </div>
 
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight text-text-primary leading-[1.05]">
+            <h1
+              className="font-serif text-4xl sm:text-5xl lg:text-6xl tracking-tight text-text-primary leading-[1.05] transition-transform duration-150"
+              style={{ transform: `translateY(${scrollProgress * -14}px)`, opacity: Math.max(0.3, 1 - scrollProgress * 0.45) }}
+            >
               Distributed Systems,
               <br />
               <span className="italic text-emerald-400 font-sans font-light">Production Backends</span>,
@@ -79,7 +82,10 @@ export function HeroSystem() {
               &amp; AI Retrieval Architectures.
             </h1>
 
-            <p className="mt-5 max-w-xl font-mono text-xs sm:text-sm text-text-secondary leading-relaxed">
+            <p
+              className="mt-5 max-w-xl font-mono text-xs sm:text-sm text-text-secondary leading-relaxed transition-transform duration-150"
+              style={{ transform: `translateY(${scrollProgress * -8}px)` }}
+            >
               Backend Developer Intern shipping live ERP modules at <strong className="text-text-primary font-semibold">Seratek Systems (2026)</strong> with NestJS, Redis, MongoDB &amp; BullMQ. Building sponsored platforms like <strong className="text-text-primary font-semibold">LBO Community Marketplace</strong> and researching AI retrieval architectures.
             </p>
 
@@ -188,7 +194,10 @@ export function HeroSystem() {
           </div>
 
           {/* Right: Live Telemetry Grid & Architecture State */}
-          <div className="rounded-xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl">
+          <div
+            className="rounded-xl border border-white/10 bg-[#0d1117] p-5 shadow-2xl transition-transform duration-150"
+            style={{ transform: `translateY(${scrollProgress * 10}px)` }}
+          >
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <span className="font-mono text-xs text-emerald-400 uppercase tracking-wider">
                 ● CORE TELEMETRY METRICS
@@ -250,6 +259,21 @@ export function HeroSystem() {
               <span>{PROFILE.phone}</span>
             </div>
           </div>
+        </div>
+
+        {/* Subtle camera conduit to Chapter 02 */}
+        <div className="mt-10 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-text-secondary">
+          <div className="flex items-center gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-white/50">CONDUIT // SCROLL TO DESCEND INTO ARCHITECTURE</span>
+          </div>
+          <a
+            href="#engineering"
+            className="flex items-center gap-1.5 text-emerald-400/80 hover:text-emerald-300 transition-colors"
+          >
+            <span>02 // SUBSYSTEMS &amp; EVIDENCE</span>
+            <span>↓</span>
+          </a>
         </div>
       </div>
     </section>

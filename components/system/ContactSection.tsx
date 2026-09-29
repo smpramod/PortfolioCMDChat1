@@ -3,6 +3,7 @@
 import { useState, useActionState } from "react";
 import { submitContact } from "@/lib/actions";
 import { PROFILE, CURATED_QA } from "@/lib/system-data";
+import { SectionTransitionMarker } from "./SectionTransitionMarker";
 import type { ContactFormState } from "@/lib/types";
 
 const initialState: ContactFormState = { ok: false, error: "" };
@@ -20,6 +21,14 @@ export function ContactSection() {
       {/* Anchor targets for backward compatibility */}
       <div id="system-endpoint" className="relative -top-24 invisible" />
       <div id="ask-my-work" className="relative -top-24 invisible" />
+
+      {/* Visual Chapter Continuity Conduit from Experience */}
+      <SectionTransitionMarker
+        fromLabel="05 // EXPERIENCE"
+        toLabel="06 // CONTACT"
+        descriptor="CREDENTIALS & RECORD ──→ DIRECT ENDPOINT & INQUIRIES"
+        theme="cyan"
+      />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Recruiter & Dev Quick Ground Truth Accordion / Drawer */}

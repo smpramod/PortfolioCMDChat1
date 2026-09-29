@@ -135,6 +135,12 @@ export function EngineeringSection() {
     projects: activeNode.projects,
   };
 
+  const isNodeRelated = (nodeId: string, nodeProjects: string[]) => {
+    if (nodeId === activeNode.id) return true;
+    const activeProjects = activeNode.projects || [];
+    return nodeProjects.some((p) => activeProjects.includes(p));
+  };
+
   return (
     <section ref={sectionRef} id="engineering" className="py-20 border-b border-white/10 bg-[#07090d] relative">
       {/* Anchor targets for backward compatibility */}
@@ -142,24 +148,40 @@ export function EngineeringSection() {
       <div id="request-pipeline" className="relative -top-24 invisible" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Section Header with Staggered Arrival Choreography */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
           <div>
-            <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 uppercase tracking-widest mb-2">
+            <div
+              className={`inline-flex items-center gap-2 font-mono text-xs text-emerald-400 uppercase tracking-widest mb-2 transition-all duration-300 ${
+                hasTriggeredBuild ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              }`}
+            >
               <span>02 // ENGINEERING</span>
               <span>·</span>
               <span>ARCHITECTURE &amp; EXECUTION LIFECYCLE</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-text-primary">
+            <h2
+              className={`font-serif text-3xl sm:text-4xl lg:text-5xl text-text-primary transition-all duration-500 delay-100 ${
+                hasTriggeredBuild ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              }`}
+            >
               Engineering Systems &amp; Architecture
             </h2>
-            <p className="mt-2 font-mono text-xs sm:text-sm text-text-secondary max-w-2xl leading-relaxed">
+            <p
+              className={`mt-2 font-mono text-xs sm:text-sm text-text-secondary max-w-2xl leading-relaxed transition-all duration-500 delay-200 ${
+                hasTriggeredBuild ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              }`}
+            >
               How I architect, persist, and execute distributed backend systems. Grounded in concrete subsystem implementations and verifiable request lifecycles—no generic skill percentage bars.
             </p>
           </div>
 
           {/* Primary View Switcher: Subsystem Architecture vs Execution Pipeline */}
-          <div className="flex items-center rounded-xl border border-white/10 bg-[#0d1117] p-1.5 shrink-0">
+          <div
+            className={`flex items-center rounded-xl border border-white/10 bg-[#0d1117] p-1.5 shrink-0 transition-all duration-500 delay-300 ${
+              hasTriggeredBuild ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            }`}
+          >
             <button
               type="button"
               onClick={() => setActiveTab("architecture")}
@@ -244,6 +266,7 @@ export function EngineeringSection() {
                         const isSelected = selectedNodeId === node.id;
                         const isHovered = hoveredNodeId === node.id;
                         const isVisited = visitedNodes.includes(node.id);
+                        const isRelated = isNodeRelated(node.id, node.projects);
                         return (
                           <button
                             key={node.id}
@@ -251,12 +274,14 @@ export function EngineeringSection() {
                             onClick={() => handleSelectNode(node.id)}
                             onMouseEnter={() => setHoveredNodeId(node.id)}
                             onMouseLeave={() => setHoveredNodeId(null)}
-                            className={`flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
+                            className={`card-interactive flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
                               isSelected
-                                ? "border-emerald-400 bg-emerald-500/15 shadow-[0_0_15px_rgba(52,211,153,0.25)]"
+                                ? "border-emerald-400 bg-emerald-500/15 shadow-[0_0_15px_rgba(52,211,153,0.25)] z-10"
                                 : isHovered
-                                ? "border-emerald-400/60 bg-emerald-500/10"
-                                : "border-white/10 bg-white/5 hover:border-white/25 hover:bg-white/[0.08]"
+                                ? "border-emerald-400/60 bg-emerald-500/10 shadow-[0_0_10px_rgba(52,211,153,0.15)] z-10"
+                                : isRelated
+                                ? "border-emerald-500/30 bg-emerald-500/5 ring-1 ring-emerald-500/20 text-emerald-200"
+                                : "border-white/10 bg-white/5 opacity-70 hover:opacity-100 hover:border-white/25 hover:bg-white/[0.08]"
                             }`}
                           >
                             <div className="flex items-center justify-between w-full">
@@ -293,6 +318,7 @@ export function EngineeringSection() {
                         const isSelected = selectedNodeId === node.id;
                         const isHovered = hoveredNodeId === node.id;
                         const isVisited = visitedNodes.includes(node.id);
+                        const isRelated = isNodeRelated(node.id, node.projects);
                         return (
                           <button
                             key={node.id}
@@ -300,12 +326,14 @@ export function EngineeringSection() {
                             onClick={() => handleSelectNode(node.id)}
                             onMouseEnter={() => setHoveredNodeId(node.id)}
                             onMouseLeave={() => setHoveredNodeId(null)}
-                            className={`flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
+                            className={`card-interactive flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
                               isSelected
-                                ? "border-cyan-400 bg-cyan-500/15 shadow-[0_0_15px_rgba(6,182,212,0.25)]"
+                                ? "border-cyan-400 bg-cyan-500/15 shadow-[0_0_15px_rgba(6,182,212,0.25)] z-10"
                                 : isHovered
-                                ? "border-cyan-400/60 bg-cyan-500/10"
-                                : "border-white/10 bg-white/5 hover:border-white/25 hover:bg-white/[0.08]"
+                                ? "border-cyan-400/60 bg-cyan-500/10 shadow-[0_0_10px_rgba(6,182,212,0.15)] z-10"
+                                : isRelated
+                                ? "border-cyan-500/30 bg-cyan-500/5 ring-1 ring-cyan-500/20 text-cyan-200"
+                                : "border-white/10 bg-white/5 opacity-70 hover:opacity-100 hover:border-white/25 hover:bg-white/[0.08]"
                             }`}
                           >
                             <div className="flex items-center justify-between w-full">
@@ -342,6 +370,7 @@ export function EngineeringSection() {
                         const isSelected = selectedNodeId === node.id;
                         const isHovered = hoveredNodeId === node.id;
                         const isVisited = visitedNodes.includes(node.id);
+                        const isRelated = isNodeRelated(node.id, node.projects);
                         return (
                           <button
                             key={node.id}
@@ -349,12 +378,14 @@ export function EngineeringSection() {
                             onClick={() => handleSelectNode(node.id)}
                             onMouseEnter={() => setHoveredNodeId(node.id)}
                             onMouseLeave={() => setHoveredNodeId(null)}
-                            className={`flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
+                            className={`card-interactive flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
                               isSelected
-                                ? "border-amber-400 bg-amber-500/15 shadow-[0_0_15px_rgba(245,158,11,0.25)]"
+                                ? "border-amber-400 bg-amber-500/15 shadow-[0_0_15px_rgba(245,158,11,0.25)] z-10"
                                 : isHovered
-                                ? "border-amber-400/60 bg-amber-500/10"
-                                : "border-white/10 bg-white/5 hover:border-white/25 hover:bg-white/[0.08]"
+                                ? "border-amber-400/60 bg-amber-500/10 shadow-[0_0_10px_rgba(245,158,11,0.15)] z-10"
+                                : isRelated
+                                ? "border-amber-500/30 bg-amber-500/5 ring-1 ring-amber-500/20 text-amber-200"
+                                : "border-white/10 bg-white/5 opacity-70 hover:opacity-100 hover:border-white/25 hover:bg-white/[0.08]"
                             }`}
                           >
                             <div className="flex items-center justify-between w-full">
@@ -391,6 +422,7 @@ export function EngineeringSection() {
                         const isSelected = selectedNodeId === node.id;
                         const isHovered = hoveredNodeId === node.id;
                         const isVisited = visitedNodes.includes(node.id);
+                        const isRelated = isNodeRelated(node.id, node.projects);
                         return (
                           <button
                             key={node.id}
@@ -398,12 +430,14 @@ export function EngineeringSection() {
                             onClick={() => handleSelectNode(node.id)}
                             onMouseEnter={() => setHoveredNodeId(node.id)}
                             onMouseLeave={() => setHoveredNodeId(null)}
-                            className={`flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
+                            className={`card-interactive flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
                               isSelected
-                                ? "border-purple-400 bg-purple-500/15 shadow-[0_0_15px_rgba(139,92,246,0.25)]"
+                                ? "border-purple-400 bg-purple-500/15 shadow-[0_0_15px_rgba(139,92,246,0.25)] z-10"
                                 : isHovered
-                                ? "border-purple-400/60 bg-purple-500/10"
-                                : "border-white/10 bg-white/5 hover:border-white/25 hover:bg-white/[0.08]"
+                                ? "border-purple-400/60 bg-purple-500/10 shadow-[0_0_10px_rgba(139,92,246,0.15)] z-10"
+                                : isRelated
+                                ? "border-purple-500/30 bg-purple-500/5 ring-1 ring-purple-500/20 text-purple-200"
+                                : "border-white/10 bg-white/5 opacity-70 hover:opacity-100 hover:border-white/25 hover:bg-white/[0.08]"
                             }`}
                           >
                             <div className="flex items-center justify-between w-full">
@@ -439,7 +473,7 @@ export function EngineeringSection() {
                   </span>
                 </div>
 
-                <div className="mt-5">
+                <div key={activeNode.id} className="mt-5 reveal-enter">
                   <div className="flex items-baseline justify-between">
                     <h3 className="font-serif text-2xl sm:text-3xl text-text-primary">
                       {activeNode.label}
@@ -503,6 +537,62 @@ export function EngineeringSection() {
                           <span className="text-text-primary">{currentRel.dependencies.join(" · ")}</span>
                         </div>
                       )}
+                    </div>
+                  </div>
+
+                  {/* SIGNATURE INTERACTION: Animated Live Connection Trace */}
+                  <div className="mt-4 rounded-xl border border-emerald-500/30 bg-black/60 p-4 font-mono text-xs">
+                    <div className="flex items-center justify-between text-[10px] text-emerald-400 font-bold mb-3 border-b border-white/5 pb-2">
+                      <span className="flex items-center gap-1.5">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                        LIVE ARCHITECTURAL CONDUIT
+                      </span>
+                      <span className="text-white/40">DATA STREAMING</span>
+                    </div>
+
+                    {/* Interactive Animated SVG Flow Conduit */}
+                    <div className="flex items-center justify-between gap-1.5 overflow-x-auto py-1">
+                      {/* Node 1: Active Subsystem */}
+                      <div className="flex flex-col items-center shrink-0">
+                        <span className="rounded border border-emerald-400/80 bg-emerald-500/20 px-2 py-0.5 text-[10px] text-emerald-300 font-bold shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+                          {activeNode.label}
+                        </span>
+                        <span className="text-[8px] text-text-secondary mt-0.5 uppercase">SOURCE</span>
+                      </div>
+
+                      {/* Conduit 1 with Animated Dash & Flowing Pulse Dot */}
+                      <div className="flex-1 min-w-[28px] max-w-[50px] flex items-center justify-center">
+                        <svg className="w-full h-3" viewBox="0 0 50 12" fill="none">
+                          <line x1="0" y1="6" x2="50" y2="6" stroke="rgba(52,211,153,0.3)" strokeWidth="1.5" strokeDasharray="2 3" />
+                          <line x1="0" y1="6" x2="50" y2="6" stroke="#34d399" strokeWidth="1.5" strokeDasharray="4 4" className="trace-flow" />
+                          <circle cx="25" cy="6" r="2" fill="#34d399" className="pulse-dot" />
+                        </svg>
+                      </div>
+
+                      {/* Node 2: Mechanism / Architecture Link */}
+                      <div className="flex flex-col items-center shrink-0">
+                        <span className="rounded border border-cyan-400/50 bg-cyan-500/10 px-2 py-0.5 text-[10px] text-cyan-300 font-medium">
+                          {currentRel.dependencies[0] || "ACID Engine"}
+                        </span>
+                        <span className="text-[8px] text-text-secondary mt-0.5 uppercase">MECHANISM</span>
+                      </div>
+
+                      {/* Conduit 2 with Animated Dash & Flowing Pulse Dot */}
+                      <div className="flex-1 min-w-[28px] max-w-[50px] flex items-center justify-center">
+                        <svg className="w-full h-3" viewBox="0 0 50 12" fill="none">
+                          <line x1="0" y1="6" x2="50" y2="6" stroke="rgba(6,182,212,0.3)" strokeWidth="1.5" strokeDasharray="2 3" />
+                          <line x1="0" y1="6" x2="50" y2="6" stroke="#06b6d4" strokeWidth="1.5" strokeDasharray="4 4" className="trace-flow" />
+                          <circle cx="25" cy="6" r="2" fill="#06b6d4" className="pulse-dot" />
+                        </svg>
+                      </div>
+
+                      {/* Node 3: Target Production Deliverable */}
+                      <div className="flex flex-col items-center shrink-0">
+                        <span className="rounded border border-amber-400/50 bg-amber-500/10 px-2 py-0.5 text-[10px] text-amber-300 font-semibold">
+                          {activeNode.projects[0] || "Production"}
+                        </span>
+                        <span className="text-[8px] text-text-secondary mt-0.5 uppercase">TARGET</span>
+                      </div>
                     </div>
                   </div>
 

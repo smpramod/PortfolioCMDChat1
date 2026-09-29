@@ -90,6 +90,7 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transform: none !important;
   }
 }
 
@@ -317,4 +318,81 @@ html[data-theme="light"] .grain {
 
 .system-wake-up {
   animation: systemWakeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Cinematic Micro-Interactions & Subsystem Dynamics */
+.card-interactive {
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.24s ease,
+              box-shadow 0.24s ease,
+              background-color 0.24s ease;
+  will-change: transform;
+}
+
+.card-interactive:hover {
+  transform: translateY(-2.5px);
+}
+
+.card-interactive:active {
+  transform: translateY(-0.5px);
+}
+
+@keyframes traceDash {
+  0% { stroke-dashoffset: 40; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.trace-flow {
+  stroke-dasharray: 4 6;
+  animation: traceDash 1.4s linear infinite;
+}
+
+@keyframes signalPulse {
+  0% { transform: scale(0.96); opacity: 0.6; }
+  50% { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(0.96); opacity: 0.6; }
+}
+
+.signal-pulse {
+  animation: signalPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes radarPing {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+.radar-ping {
+  animation: radarPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.hover-glow-emerald:hover {
+  box-shadow: 0 0 20px -2px rgba(52, 211, 153, 0.28);
+}
+
+.hover-glow-cyan:hover {
+  box-shadow: 0 0 20px -2px rgba(6, 182, 212, 0.28);
+}
+
+.hover-glow-purple:hover {
+  box-shadow: 0 0 20px -2px rgba(139, 92, 246, 0.28);
+}
+
+.hover-glow-amber:hover {
+  box-shadow: 0 0 20px -2px rgba(245, 158, 11, 0.28);
+}
+
+@keyframes sectionFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-enter {
+  animation: sectionFadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

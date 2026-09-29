@@ -7,12 +7,16 @@ import { ResearchSection } from "@/components/system/ResearchSection";
 import { EngineeringMilestones } from "@/components/system/EngineeringMilestones";
 import { ContactSection } from "@/components/system/ContactSection";
 import { CommandPalette } from "@/components/system/CommandPalette";
+import { InteractivePointerHalo } from "@/components/system/InteractivePointerHalo";
 
 export default function HomePage() {
   return (
     <SystemProvider>
       {/* Top Engineering Telemetry HUD Bar */}
       <SystemHeader />
+
+      {/* Subtle Desktop Pointer Halo */}
+      <InteractivePointerHalo />
 
       {/* ⌘K Command Palette Modal */}
       <CommandPalette />

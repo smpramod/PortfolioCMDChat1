@@ -1,40 +1,80 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { RAG_LAYERS, UEBA_RESEARCH } from "@/lib/system-data";
+import { SectionTransitionMarker } from "./SectionTransitionMarker";
 
 export function ResearchSection() {
   const [activeResearchTab, setActiveResearchTab] = useState<"rag" | "ueba">("rag");
   const [activeRagStep, setActiveRagStep] = useState<number>(1);
+  const [hasEntered, setHasEntered] = useState<boolean>(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setHasEntered(true);
+        }
+      },
+      { threshold: 0.12 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const selectedLayer =
     RAG_LAYERS.find((l) => l.step === activeRagStep) || RAG_LAYERS[0];
 
   return (
-    <section id="research" className="py-20 border-b border-white/10 bg-[#07090d] relative">
+    <section ref={sectionRef} id="research" className="py-20 border-b border-white/10 bg-[#07090d] relative">
       {/* Anchor targets for backward compatibility */}
       <div id="ai-research" className="relative -top-24 invisible" />
       <div id="research-lab" className="relative -top-24 invisible" />
 
+      {/* Visual Chapter Continuity Conduit from Projects */}
+      <SectionTransitionMarker
+        fromLabel="03 // PROJECTS"
+        toLabel="04 // RESEARCH"
+        descriptor="DETERMINISTIC SYSTEMS ──→ EXPLORATORY & EXPERIMENTAL TOPOLOGY"
+        theme="purple"
+      />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Section Header with Staggered Arrival */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/10 pb-6">
           <div>
-            <div className="inline-flex items-center gap-2 font-mono text-xs text-purple-400 uppercase tracking-widest mb-2">
+            <div
+              className={`inline-flex items-center gap-2 font-mono text-xs text-purple-400 uppercase tracking-widest mb-2 transition-all duration-300 ${
+                hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+              }`}
+            >
               <span>04 // AI &amp; SYSTEMS RESEARCH</span>
               <span>·</span>
               <span>SCIENTIFIC RIGOR &amp; ADVANCED RETRIEVAL</span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-text-primary">
+            <h2
+              className={`font-serif text-3xl sm:text-4xl lg:text-5xl text-text-primary transition-all duration-500 delay-100 ${
+                hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              }`}
+            >
               Applied AI &amp; Machine Learning Research
             </h2>
-            <p className="mt-2 font-mono text-xs sm:text-sm text-text-secondary max-w-2xl leading-relaxed">
+            <p
+              className={`mt-2 font-mono text-xs sm:text-sm text-text-secondary max-w-2xl leading-relaxed transition-all duration-500 delay-200 ${
+                hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+              }`}
+            >
               Moving past naive vector search and heuristic baselines: multi-stage retrieval pipelines with rerankers and chronological behavioral anomaly detection evaluated without lookahead bias.
             </p>
           </div>
 
           {/* Research Subject Switcher */}
-          <div className="flex items-center rounded-xl border border-white/10 bg-[#0d1117] p-1.5 shrink-0">
+          <div
+            className={`flex items-center rounded-xl border border-white/10 bg-[#0d1117] p-1.5 shrink-0 transition-all duration-500 delay-300 ${
+              hasEntered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            }`}
+          >
             <button
               type="button"
               onClick={() => setActiveResearchTab("rag")}
@@ -85,9 +125,9 @@ export function ResearchSection() {
                     key={layer.step}
                     type="button"
                     onClick={() => setActiveRagStep(layer.step)}
-                    className={`flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
+                    className={`card-interactive flex flex-col items-start p-3 rounded-lg border text-left transition-all relative ${
                       isSelected
-                        ? "border-purple-400 bg-purple-500/15 shadow-[0_0_15px_rgba(139,92,246,0.3)] scale-[1.02]"
+                        ? "border-purple-400 bg-purple-500/15 shadow-[0_0_15px_rgba(139,92,246,0.3)] scale-[1.02] z-10"
                         : isPassed
                         ? "border-purple-500/30 bg-purple-500/5 text-purple-200"
                         : "border-white/5 bg-white/5 hover:border-white/20 text-text-secondary"
@@ -111,7 +151,7 @@ export function ResearchSection() {
 
             {/* Selected Layer Architectural Breakdown */}
             <div className="mt-6 rounded-xl border border-purple-500/30 bg-[#0d1117] p-6 lg:p-8 shadow-2xl transition-all duration-300">
-              <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8">
+              <div key={selectedLayer.step} className="reveal-enter grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8">
                 {/* Left: Layer Specs */}
                 <div>
                   <div className="flex items-center gap-2 mb-2 font-mono text-xs text-purple-400">
@@ -245,60 +285,96 @@ export function ResearchSection() {
                 </span>
               </div>
 
-              {/* 4-Stage Horizontal Transformation Flow */}
+              {/* 4-Stage Horizontal Transformation Flow with Flow Conduits */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {/* Stage 1: Raw Signals */}
-                <div className="rounded-lg border border-white/10 bg-black/40 p-4 font-mono text-xs">
-                  <span className="text-purple-400 font-bold block mb-2">01 / RAW LOG SIGNALS</span>
-                  <div className="space-y-1.5 text-[11px] text-text-secondary">
-                    <div className="flex items-center justify-between border-b border-white/5 pb-1">
-                      <span>• AUTH_LOGIN</span>
-                      <span className="text-white/40">Timestamp</span>
+                <div className="card-interactive rounded-lg border border-white/10 bg-black/40 p-4 font-mono text-xs flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-purple-400 font-bold">01 / RAW LOG SIGNALS</span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-ping" />
                     </div>
-                    <div className="flex items-center justify-between border-b border-white/5 pb-1">
-                      <span>• HTTP_REQUEST</span>
-                      <span className="text-white/40">Payload Size</span>
+                    <div className="space-y-1.5 text-[11px] text-text-secondary">
+                      <div className="flex items-center justify-between border-b border-white/5 pb-1">
+                        <span>• AUTH_LOGIN</span>
+                        <span className="text-white/40">Timestamp</span>
+                      </div>
+                      <div className="flex items-center justify-between border-b border-white/5 pb-1">
+                        <span>• HTTP_REQUEST</span>
+                        <span className="text-white/40">Payload Size</span>
+                      </div>
+                      <div className="flex items-center justify-between border-b border-white/5 pb-1">
+                        <span>• FILE_EXPORT</span>
+                        <span className="text-white/40">Resource ID</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span>• ACCESS_TIME</span>
+                        <span className="text-white/40">Off-Hours</span>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between border-b border-white/5 pb-1">
-                      <span>• FILE_EXPORT</span>
-                      <span className="text-white/40">Resource ID</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span>• ACCESS_TIME</span>
-                      <span className="text-white/40">Off-Hours</span>
-                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[9px] text-purple-400/80 font-mono">
+                    <span>EMBEDDING FLOW</span>
+                    <span className="animate-pulse">──→</span>
                   </div>
                 </div>
 
                 {/* Stage 2: Feature Engineering */}
-                <div className="rounded-lg border border-cyan-500/30 bg-cyan-950/15 p-4 font-mono text-xs">
-                  <span className="text-cyan-300 font-bold block mb-2">02 / FEATURE ENGINE</span>
-                  <p className="text-[11px] text-text-secondary font-sans leading-relaxed">
-                    Transforms raw time-series into 3 multi-dimensional vectors: Temporal Deviations, Entropy of Resource Access, and Peer-Group Baseline Variance.
-                  </p>
+                <div className="card-interactive rounded-lg border border-cyan-500/30 bg-cyan-950/15 p-4 font-mono text-xs flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-cyan-300 font-bold">02 / FEATURE ENGINE</span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                    </div>
+                    <p className="text-[11px] text-text-secondary font-sans leading-relaxed">
+                      Transforms raw time-series into 3 multi-dimensional vectors: Temporal Deviations, Entropy of Resource Access, and Peer-Group Baseline Variance.
+                    </p>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-cyan-500/20 flex items-center justify-between text-[9px] text-cyan-400/80 font-mono">
+                    <span>VECTOR CALIBRATION</span>
+                    <span className="animate-pulse">──→</span>
+                  </div>
                 </div>
 
                 {/* Stage 3: ML Ensemble */}
-                <div className="rounded-lg border border-amber-500/30 bg-amber-950/15 p-4 font-mono text-xs">
-                  <span className="text-amber-300 font-bold block mb-2">03 / ENSEMBLE MODELS</span>
-                  <ul className="space-y-1.5 text-[11px]">
-                    <li className="text-text-primary">↳ Isolation Forest</li>
-                    <li className="text-text-primary">↳ One-Class SVM</li>
-                    <li className="text-text-primary">↳ Gradient Boosted Trees</li>
-                  </ul>
+                <div className="card-interactive rounded-lg border border-amber-500/30 bg-amber-950/15 p-4 font-mono text-xs flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-amber-300 font-bold">03 / ENSEMBLE MODELS</span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+                    </div>
+                    <ul className="space-y-1.5 text-[11px]">
+                      <li className="text-text-primary">↳ Isolation Forest</li>
+                      <li className="text-text-primary">↳ One-Class SVM</li>
+                      <li className="text-text-primary">↳ Gradient Boosted Trees</li>
+                    </ul>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-amber-500/20 flex items-center justify-between text-[9px] text-amber-400/80 font-mono">
+                    <span>WEIGHTED FUSION</span>
+                    <span className="animate-pulse">──→</span>
+                  </div>
                 </div>
 
                 {/* Stage 4: Risk Calibration */}
-                <div className="rounded-lg border border-emerald-500/40 bg-emerald-950/20 p-4 font-mono text-xs">
-                  <span className="text-emerald-300 font-bold block mb-2">04 / RISK FUSION</span>
-                  <div className="rounded border border-emerald-500/30 bg-black/60 p-2.5 mt-2">
-                    <span className="text-[10px] text-white/40 block">OUTPUT METRIC:</span>
-                    <span className="text-xs text-emerald-400 font-bold block mt-0.5">
-                      FUSED SCORE: 0.12 [BASELINE NORMAL]
-                    </span>
-                    <span className="text-[10px] text-amber-400 block mt-1">
-                      THRESHOLD: &gt;0.75 [TRIGGER AUDIT]
-                    </span>
+                <div className="card-interactive rounded-lg border border-emerald-500/40 bg-emerald-950/20 p-4 font-mono text-xs flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-emerald-300 font-bold">04 / RISK FUSION</span>
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                    </div>
+                    <div className="rounded border border-emerald-500/30 bg-black/60 p-2.5 mt-2">
+                      <span className="text-[10px] text-white/40 block">OUTPUT METRIC:</span>
+                      <span className="text-xs text-emerald-400 font-bold block mt-0.5">
+                        FUSED SCORE: 0.12 [BASELINE NORMAL]
+                      </span>
+                      <span className="text-[10px] text-amber-400 block mt-1">
+                        THRESHOLD: &gt;0.75 [TRIGGER AUDIT]
+                      </span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-emerald-500/20 flex items-center justify-between text-[9px] text-emerald-400/80 font-mono">
+                    <span>ZERO LOOKAHEAD LEAKAGE</span>
+                    <span>[VERIFIED]</span>
                   </div>
                 </div>
               </div>
@@ -314,7 +390,7 @@ export function ResearchSection() {
                 {UEBA_RESEARCH.featurePillars.map((pillar, idx) => (
                   <div
                     key={pillar.name}
-                    className="rounded-xl border border-white/10 bg-[#0d1117] p-5 shadow-xl relative hover:border-purple-400/40 transition-colors"
+                    className="card-interactive rounded-xl border border-white/10 bg-[#0d1117] p-5 shadow-xl relative hover:border-purple-400/40 transition-all"
                   >
                     <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3 font-mono text-xs">
                       <span className="text-purple-400 font-bold">PILLAR 0{idx + 1}</span>

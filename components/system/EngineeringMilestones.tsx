@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { MILESTONES } from "@/lib/system-data";
+import { SectionTransitionMarker } from "./SectionTransitionMarker";
 
 export function EngineeringMilestones() {
   const [selectedIdx, setSelectedIdx] = useState<number>(0);
@@ -15,7 +16,7 @@ export function EngineeringMilestones() {
           setIsRevealed(true);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -38,18 +39,38 @@ export function EngineeringMilestones() {
       {/* Anchor target for backward compatibility */}
       <div id="career-milestones" className="relative -top-24 invisible" />
 
+      {/* Visual Chapter Continuity Conduit from Research */}
+      <SectionTransitionMarker
+        fromLabel="04 // RESEARCH"
+        toLabel="05 // EXPERIENCE"
+        descriptor="APPLIED RESEARCH LAB ──→ CAREER MILESTONES & CREDENTIALS"
+        theme="emerald"
+      />
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Section Header with Staggered Arrival */}
         <div className="border-b border-white/10 pb-6">
-          <div className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 uppercase tracking-widest mb-2">
+          <div
+            className={`inline-flex items-center gap-2 font-mono text-xs text-emerald-400 uppercase tracking-widest mb-2 transition-all duration-300 ${
+              isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+            }`}
+          >
             <span>05 // EXPERIENCE</span>
             <span>·</span>
             <span>ENGINEERING MILESTONES &amp; CREDENTIALS</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-text-primary">
+          <h2
+            className={`font-serif text-3xl sm:text-4xl lg:text-5xl text-text-primary transition-all duration-500 delay-100 ${
+              isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            }`}
+          >
             Experience &amp; Milestones
           </h2>
-          <p className="mt-2 font-mono text-xs sm:text-sm text-text-secondary max-w-2xl">
+          <p
+            className={`mt-2 font-mono text-xs sm:text-sm text-text-secondary max-w-2xl leading-relaxed transition-all duration-500 delay-200 ${
+              isRevealed ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"
+            }`}
+          >
             A chronological record of production software delivery, professional engineering responsibilities, academic rigor, and verified cloud certifications.
           </p>
         </div>
@@ -94,9 +115,9 @@ export function EngineeringMilestones() {
                   key={`${m.role}-${m.organization}`}
                   type="button"
                   onClick={() => setSelectedIdx(idx)}
-                  className={`w-full flex flex-col items-start p-4 rounded-xl border text-left transition-all ${
+                  className={`card-interactive w-full flex flex-col items-start p-4 rounded-xl border text-left transition-all ${
                     isSelected
-                      ? "border-emerald-400/80 bg-emerald-500/10 shadow-[0_0_20px_rgba(52,211,153,0.18)]"
+                      ? "border-emerald-400/80 bg-emerald-500/10 shadow-[0_0_20px_rgba(52,211,153,0.18)] z-10"
                       : "border-white/10 bg-[#0d1117] hover:border-white/20"
                   }`}
                 >
@@ -119,6 +140,7 @@ export function EngineeringMilestones() {
 
           {/* Milestone Detail Inspector */}
           <div className="rounded-xl border border-white/10 bg-[#0d1117] p-6 lg:p-8 shadow-2xl relative">
+            <div key={`${activeMilestone.role}-${activeMilestone.organization}-${selectedIdx}`} className="reveal-enter">
             <div className="flex flex-wrap items-center justify-between border-b border-white/10 pb-4 gap-2">
               <div>
                 <span className="rounded bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 font-mono text-[10px] text-emerald-400 font-bold uppercase">
@@ -183,6 +205,7 @@ export function EngineeringMilestones() {
                   ))}
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>
