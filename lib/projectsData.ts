@@ -31,7 +31,7 @@ export const projects: Project[] = [
     ],
     tech: ["Spring Boot", "Java", "Android Studio", "Firebase", "MySQL", "JavaScript", "XAMPP"],
     image: "/projects/erp.svg",
-    status: "in-progress",
+    status: "building",
   },
   {
     id: "clinic-management",
