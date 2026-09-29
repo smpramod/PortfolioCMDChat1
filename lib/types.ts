@@ -7,7 +7,7 @@ export interface Project {
   image: string;
   liveUrl?: string;
   githubUrl?: string;
-  status?: "building" | "shipped" | "in-progress";
+  status?: string;
   private?: boolean;
 }
 
